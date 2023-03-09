@@ -9,7 +9,7 @@ namespace ConsoleApp
 {
     internal static class EventManager
     {
-        public static List<Event> GetEvents(Arguments arguments)
+        public static List<Event> GetEvents(Options options)
         {
             var events = new List<Event>
             {
@@ -18,23 +18,40 @@ namespace ConsoleApp
                 new Event(null, "Random birthday", new DateOnly(2000,05,01)),
             };
 
-            if(arguments.Categories is null)
-            {
-                events = events.Where(x => x.Category is null || x.Category == string.Empty).ToList();
-            }
-            else if(arguments.Categories.Count != 0)
-            {
-                events = events.Where(x => x.Category is not null && arguments.Categories.Contains(x.Category)).ToList();
-            }
+            if(options.NoCategory)
+                events = events
+                    .Where(x => (!options.IsExcluded) ? x.Category is null || x.Category == string.Empty : !(x.Category is null || x.Category == string.Empty))
+                    .ToList();
 
-            if(arguments.BeforeDate.HasValue)
-                events = events.Where(x => x.TimeStamp <  arguments.BeforeDate.Value).ToList();
+            if(options.IsToday)
+                events = events
+                    .Where(x => (!options.IsExcluded) ? x.TimeStamp == DateOnly.FromDateTime(DateTime.Today) : x.TimeStamp != DateOnly.FromDateTime(DateTime.Today))
+                    .ToList();
 
-            if (arguments.AfterDate.HasValue)
-                events = events.Where(x => x.TimeStamp > arguments.AfterDate.Value).ToList();
+            if (options.Categories is not null)
+                events = events
+                    .Where(x => x.Category is not null && (!options.IsExcluded) ? options.Categories.Split(",").Contains(x.Category) : !options.Categories.Split(",").Contains(x.Category) )
+                    .ToList();
 
-            if (arguments.Date.HasValue)
-                events = events.Where(x => x.TimeStamp == arguments.Date.Value).ToList();
+            if (options.Descriptions is not null)
+                events = events
+                    .Where(x => x.Description is not null && options.Descriptions.Split(",").Contains(x.Description))
+                    .ToList();
+
+            if (options.BeforeDate.HasValue)
+                events = events
+                    .Where(x => (!options.IsExcluded) ? x.TimeStamp < options.BeforeDate.Value : x.TimeStamp >= options.BeforeDate.Value)
+                    .ToList();
+
+            if (options.AfterDate.HasValue)
+                events = events
+                    .Where(x => (!options.IsExcluded) ? x.TimeStamp > options.AfterDate.Value : x.TimeStamp <= options.AfterDate.Value)
+                    .ToList();
+
+            if (options.Date.HasValue)
+                events = events
+                    .Where(x => (!options.IsExcluded) ? x.TimeStamp == options.Date.Value : x.TimeStamp != options.Date.Value)
+                    .ToList();
 
 
 
