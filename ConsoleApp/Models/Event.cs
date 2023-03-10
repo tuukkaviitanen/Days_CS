@@ -19,6 +19,6 @@ public class Event
 
     public override string ToString()
     {
-        return $"{Category}:{Description}:{TimeStamp}";
+        return $"{Category}:{Description}:{TimeStamp:yyyy-MM-dd}";
     }
 }

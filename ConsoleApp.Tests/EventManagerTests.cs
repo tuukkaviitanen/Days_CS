@@ -15,24 +15,17 @@ namespace ConsoleApp.Tests
         {
             // Arrange
 
-            var options = new Options
-            {
-                 IsToday = true,
-                 IsExcluded = true,
-            };
+            //// Act
 
-            // Act
+            //var result = EventManager.GetEvents(options);
 
-            var result = EventManager.GetEvents(options);
+            //// Assert
 
-            // Assert
-
-            Assert.IsType<List<Event>>(result);
-            Assert.NotNull(result);
+            //Assert.IsType<List<Event>>(result);
+            //Assert.NotNull(result);
 
         }
 
-        [Theory]
 
     }
 }

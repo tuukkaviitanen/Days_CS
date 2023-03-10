@@ -1,18 +1,36 @@
 ﻿
+using CommandLine;
 using ConsoleApp;
 using ConsoleApp.Models;
 
-var options = CommandLineManager.ParseCommand(args);
+var result = Parser.Default.ParseArguments<ListOptions, AddOptions, DeleteOptions>(args)
+    .WithParsed<ListOptions>(HandleListCommand)
+    .WithParsed<AddOptions>(HandleAddCommand)
+    .WithParsed<DeleteOptions>(HandleDeleteCommand);
 
-var result = options.Command switch
+static void HandleListCommand(ListOptions options)
 {
-    Command.List => EventManager.GetEvents(options),
-    Command.Add => throw new NotImplementedException(),
-    Command.Delete => throw new NotImplementedException(),
-};
-foreach (var item in result)
-{
-    Console.WriteLine(item);
+    var results = EventManager.GetEvents(options);
 
+    foreach(var item in results)
+    {
+        Console.WriteLine(item);
+    }
 }
 
+static void HandleAddCommand(AddOptions options)
+{
+    var result = EventManager.AddEvent(options);
+
+    Console.WriteLine(result);
+}
+
+static void HandleDeleteCommand(DeleteOptions options)
+{
+    var results = EventManager.DeleteEvents(options);
+
+    foreach (var item in results)
+    {
+        Console.WriteLine(item);
+    }
+}

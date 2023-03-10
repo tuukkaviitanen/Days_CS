@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "list --no-category --exclude"
+      "commandLineArgs": "delete "
     },
     "WSL": {
       "commandName": "WSL2",

@@ -11,6 +11,5 @@ namespace ConsoleApp.Tests
 {
     public class ProgramTests
     {
-        ConsoleApp.Main
     }
 }

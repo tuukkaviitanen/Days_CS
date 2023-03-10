@@ -7,22 +7,12 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
-    public enum Command
+    public class QueryOptions
     {
-        List,
-        Add,
-        Delete
-    }
-
-
-    public class Options
-    {
-        public Command Command { get; set; }
-
         [Option("categories")]
         public string? Categories { get; set; }
 
-        [Option("categories")]
+        [Option("descriptions")]
         public string? Descriptions { get; set; }
 
         [Option("date")]
@@ -42,6 +32,42 @@ namespace ConsoleApp.Models
 
         [Option("exclude")]
         public bool IsExcluded { get; set; }
-
     }
+
+    [Verb("list",HelpText = "List events to console")]
+    public class ListOptions : QueryOptions
+    {
+        
+    }
+
+    [Verb("delete", HelpText = "Delete event(s)")]
+    public class DeleteOptions : QueryOptions
+    {
+        [Option("dry-run")]
+        public bool DryRun { get; set; }
+
+        [Option("all")]
+        public bool All { get; set; }
+    }
+
+    [Verb("add", HelpText = "Add event")]
+    public class AddOptions
+    {
+        [Option("category")]
+        public string? Category { get; set; }
+
+        [Option("description", Required = true)]
+        public string Description { get; set; }
+
+        [Option("date")]
+        public DateOnly Date { get; set; }
+
+        public AddOptions()
+        {
+            Date = DateOnly.FromDateTime(DateTime.Now);
+            Description = string.Empty;
+        }
+    }
+
+    
 }
