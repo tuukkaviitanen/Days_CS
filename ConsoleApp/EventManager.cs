@@ -2,13 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
+[assembly: InternalsVisibleTo("ConsoleApp.Tests")]
 namespace ConsoleApp
 {
-    internal static class EventManager
+    public static class EventManager
     {
+        /// <summary>
+        /// Gets events from .csv file and filters them
+        /// </summary>
+        /// <param name="options">Option for the filter</param>
+        /// <returns></returns>
         public static List<Event> GetEvents(Options options)
         {
             var events = new List<Event>
@@ -18,44 +25,31 @@ namespace ConsoleApp
                 new Event(null, "Random birthday", new DateOnly(2000,05,01)),
             };
 
-            if(options.NoCategory)
-                events = events
-                    .Where(x => (!options.IsExcluded) ? x.Category is null || x.Category == string.Empty : !(x.Category is null || x.Category == string.Empty))
-                    .ToList();
+            IEnumerable<Event> filteredEvents = events;
 
-            if(options.IsToday)
-                events = events
-                    .Where(x => (!options.IsExcluded) ? x.TimeStamp == DateOnly.FromDateTime(DateTime.Today) : x.TimeStamp != DateOnly.FromDateTime(DateTime.Today))
-                    .ToList();
+            if (options.NoCategory)
+                filteredEvents = filteredEvents.Where(x => x.Category is null || x.Category == string.Empty);
+
+            if (options.IsToday)
+                filteredEvents = filteredEvents.Where(x => x.TimeStamp == DateOnly.FromDateTime(DateTime.Today));
 
             if (options.Categories is not null)
-                events = events
-                    .Where(x => x.Category is not null && (!options.IsExcluded) ? options.Categories.Split(",").Contains(x.Category) : !options.Categories.Split(",").Contains(x.Category) )
-                    .ToList();
+                filteredEvents = filteredEvents.Where(x => x.Category is not null && options.Categories.Split(",").Contains(x.Category));
 
             if (options.Descriptions is not null)
-                events = events
-                    .Where(x => x.Description is not null && options.Descriptions.Split(",").Contains(x.Description))
-                    .ToList();
+                filteredEvents = filteredEvents.Where(x => x.Description is not null && options.Descriptions.Split(",").Contains(x.Description));
 
             if (options.BeforeDate.HasValue)
-                events = events
-                    .Where(x => (!options.IsExcluded) ? x.TimeStamp < options.BeforeDate.Value : x.TimeStamp >= options.BeforeDate.Value)
-                    .ToList();
+                filteredEvents = filteredEvents.Where(x => x.TimeStamp < options.BeforeDate.Value);
 
             if (options.AfterDate.HasValue)
-                events = events
-                    .Where(x => (!options.IsExcluded) ? x.TimeStamp > options.AfterDate.Value : x.TimeStamp <= options.AfterDate.Value)
-                    .ToList();
+                filteredEvents = filteredEvents.Where(x => x.TimeStamp > options.AfterDate.Value);
 
             if (options.Date.HasValue)
-                events = events
-                    .Where(x => (!options.IsExcluded) ? x.TimeStamp == options.Date.Value : x.TimeStamp != options.Date.Value)
-                    .ToList();
+                filteredEvents = filteredEvents.Where(x => x.TimeStamp == options.Date.Value);
 
 
-
-            return events;
+            return (options.IsExcluded) ? events.Except(filteredEvents).ToList() : filteredEvents.ToList();
         }
 
 

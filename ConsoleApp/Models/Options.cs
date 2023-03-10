@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
-    internal class Options
+    public enum Command
     {
+        List,
+        Add,
+        Delete
+    }
+
+
+    public class Options
+    {
+        public Command Command { get; set; }
+
         [Option("categories")]
         public string? Categories { get; set; }
 

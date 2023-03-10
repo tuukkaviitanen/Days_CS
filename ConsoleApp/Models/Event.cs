@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp.Models;
-internal class Event
+public class Event
 {
     public Event(string? category, string description, DateOnly timeStamp)
     {

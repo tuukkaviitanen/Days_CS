@@ -1,39 +1,18 @@
 ﻿
-using CommandLine;
 using ConsoleApp;
 using ConsoleApp.Models;
-using Mono.Options;
 
+var options = CommandLineManager.ParseCommand(args);
 
-var command = args.FirstOrDefault();
-
-var arguments = new Arguments();
-
-await Parser.Default.ParseArguments<Options>(args).WithParsedAsync( async options =>
+var result = options.Command switch
 {
-    switch (command)
-    {
-        case "list":
-            {
-                var events = EventManager.GetEvents(options);
-                foreach (var e in events)
-                {
-                    Console.WriteLine(e);
-                }
-                break;
-            }
-        default:
-            throw new ArgumentException("invalid command");
+    Command.List => EventManager.GetEvents(options),
+    Command.Add => throw new NotImplementedException(),
+    Command.Delete => throw new NotImplementedException(),
+};
+foreach (var item in result)
+{
+    Console.WriteLine(item);
 
-    }
-});
-
-
-
-
-
-
-
-
-
+}
 
