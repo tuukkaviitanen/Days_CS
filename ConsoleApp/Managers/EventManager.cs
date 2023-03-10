@@ -19,9 +19,10 @@ namespace ConsoleApp.Managers
         /// </summary>
         static List<Event> Events = new()
         {
-            new Event("Birthday", "Tuukka's birthday", new DateOnly(2000, 05, 23)),
-            new Event("Birthday", "Random birthday", new DateOnly(2000, 05, 01)),
-            new Event(null, "Random birthday", new DateOnly(2000, 05, 01)),
+            new Event("Birthday", "Tuukka", new DateOnly(2000, 05, 23)),
+            new Event("Birthday", "Arnold", new DateOnly(1947, 07, 30)),
+            new Event("Holiday", "Christmast last year", new DateOnly(2022, 12, 24)),
+            new Event(null, "today", DateOnly.FromDateTime(DateTime.Today))
         };
 
 

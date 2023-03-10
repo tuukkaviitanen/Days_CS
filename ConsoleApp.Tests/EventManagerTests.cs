@@ -1,10 +1,5 @@
 ﻿using ConsoleApp.Models;
-using ConsoleApp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleApp.Managers;
 
 namespace ConsoleApp.Tests
 {
@@ -15,14 +10,16 @@ namespace ConsoleApp.Tests
         {
             // Arrange
 
-            //// Act
+            var options = new ListOptions();
 
-            //var result = EventManager.GetEvents(options);
+            // Act
 
-            //// Assert
+            var result = EventManager.GetEvents(options);
 
-            //Assert.IsType<List<Event>>(result);
-            //Assert.NotNull(result);
+            // Assert
+
+            Assert.IsType<List<Event>>(result);
+            Assert.NotNull(result);
 
         }
 

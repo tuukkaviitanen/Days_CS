@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "add --description hello"
+      "commandLineArgs": "list --date 20000"
     },
     "WSL": {
       "commandName": "WSL2",
