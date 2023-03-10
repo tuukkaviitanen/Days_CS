@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "delete "
+      "commandLineArgs": "add --description hello"
     },
     "WSL": {
       "commandName": "WSL2",
