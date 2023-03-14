@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "ConsoleApp": {
+    "Days": {
       "commandName": "Project",
       "commandLineArgs": "list"
     },

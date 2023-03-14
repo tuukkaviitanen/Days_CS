@@ -1,6 +1,6 @@
 ﻿using CommandLine;
 
-namespace ConsoleApp.Models
+namespace Days.Models
 {
     /// <summary>
     /// Included all more than once used constants in Options

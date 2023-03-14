@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration.Attributes;
 
-namespace ConsoleApp.Models;
+namespace Days.Models;
 /// <summary>
 /// Holds all required properties for Events
 /// </summary>

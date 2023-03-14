@@ -1,6 +1,6 @@
 ﻿using CommandLine;
-using ConsoleApp.Managers;
-using ConsoleApp.Models;
+using Days.Managers;
+using Days.Models;
 
 
 Parser.Default.ParseArguments<ListOptions, AddOptions, DeleteOptions>(args)

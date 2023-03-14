@@ -1,9 +1,9 @@
-﻿using ConsoleApp.Models;
+﻿using Days.Models;
 using CsvHelper;
 using CsvHelper.Configuration;
 using System.Globalization;
 
-namespace ConsoleApp.Managers
+namespace Days.Managers
 {
     /// <summary>
     /// All Event operations are handled through this Manager
