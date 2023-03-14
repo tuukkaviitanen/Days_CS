@@ -1,0 +1,24 @@
+# DAYS C#
+
+Queries and writes calendar events from and to a CSV file
+
+## HOW TO USE
+
+1. Create a directory called `.days` in your home directory
+2. Create `Events.csv` file inside that
+3. Program should now be able to run
+
+## TESTING
+
+After building the app in debug configuration, you should be able to run `test_script.py`.
+It runs most possible iterations of the app through console.
+
+## NuGet Packages
+
+- CsvHelper by Josh Close
+- CommandLineParser by gsscoder, nemec, ericnewton76 and moh-hassan
+
+### IN PROGRESS
+
+- Full documentation
+- Error handling
