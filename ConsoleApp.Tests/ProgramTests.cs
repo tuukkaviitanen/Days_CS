@@ -11,7 +11,7 @@ namespace ConsoleApp.Tests
             public const string tuukka = "Birthday:Tuukka:2000-05-23\r\n";
             public const string arnold = "Birthday:Arnold:1947-07-30\r\n";
             public const string christmast = "Holiday:Christmast last year:2022-12-24\r\n";
-            public const string today = $":today:2023-03-10\r\n";
+            public const string today = $":today:2023-03-13\r\n";
         }
 
         [Theory]
