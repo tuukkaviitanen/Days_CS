@@ -86,7 +86,7 @@ namespace ConsoleApp.Managers
 
             if (options.Category is not null)
             {
-                filteredEvents = filteredEvents.Where(x => x.Category == options.Category);
+                filteredEvents = filteredEvents.Where(x => x.Category?.ToLower() == options.Category.ToLower()); // Case insensitive
             }
 
             if (options.NoCategory)
@@ -101,12 +101,13 @@ namespace ConsoleApp.Managers
 
             if (options.Categories is not null)
             {
-                filteredEvents = filteredEvents.Where(x => x.Category is not null && options.Categories.Split(",").Contains(x.Category));
+                filteredEvents = filteredEvents
+                    .Where(x => x.Category is not null && options.Categories.ToLower().Split(",").Contains(x.Category.ToLower())); // Case insensitive
             }
 
             if (options.Description is not null)
             {
-                filteredEvents = filteredEvents.Where(x => x.Description is not null && x.Description.Contains(options.Description));
+                filteredEvents = filteredEvents.Where(x => x.Description is not null && x.Description.ToLower().Contains(options.Description.ToLower())); // Case insensitive
             }
 
             if (options.BeforeDate.HasValue)
