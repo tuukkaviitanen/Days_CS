@@ -1,5 +1,4 @@
 ﻿using CommandLine;
-using ConsoleApp;
 using ConsoleApp.Managers;
 using ConsoleApp.Models;
 

@@ -1,9 +1,4 @@
 ﻿using CommandLine;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp.Models
 {
@@ -47,7 +42,7 @@ namespace ConsoleApp.Models
     public interface IEventDeleteOptions : IEventFilterOptions
     {
         bool DryRun { get; set; }
-        bool DeleteAllMatchingEvents { get; set; } 
+        bool DeleteAllEvents { get; set; } 
     }
 
     /// <summary>
@@ -133,7 +128,7 @@ namespace ConsoleApp.Models
 
 
         [Option(Constants.All, Group = Constants.Queries)]
-        public bool DeleteAllMatchingEvents { get; set; }
+        public bool DeleteAllEvents { get; set; }
 
 
         [Option(Constants.DryRun)]

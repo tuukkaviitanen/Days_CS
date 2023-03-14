@@ -2,7 +2,7 @@
   "profiles": {
     "ConsoleApp": {
       "commandName": "Project",
-      "commandLineArgs": "list --date 20000"
+      "commandLineArgs": "list"
     },
     "WSL": {
       "commandName": "WSL2",

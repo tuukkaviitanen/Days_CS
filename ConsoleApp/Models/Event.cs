@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static ConsoleApp.Models.Event;
+﻿using CsvHelper.Configuration.Attributes;
 
 namespace ConsoleApp.Models;
 /// <summary>
@@ -11,9 +6,9 @@ namespace ConsoleApp.Models;
 /// </summary>
 public interface IEvent
 {
+    public DateOnly Date { get; set; }
     public string? Category { get; set; }
     public string Description { get; set; }
-    public DateOnly Date { get; set; }
 }
 
 /// <summary>
@@ -29,7 +24,7 @@ public class Event : IEvent
     }
 
     /// <summary>
-    /// Way to create Event out of any class that implements IEvent
+    /// Way to create Event out of any class that implements IEvent.
     /// </summary>
     /// <param name="iEvent">Any class that implemets IEvent</param>
     public Event(IEvent iEvent)
@@ -38,12 +33,20 @@ public class Event : IEvent
         Description = iEvent.Description;
         Date = iEvent.Date;
     }
-    public string? Category { get; set; }   
+
+    // Name attributes are for CsvHelper to write lowercase headers
+    [Name("category")]
+    public string? Category { get; set; }
+
+    [Name("description")]
     public string Description { get; set; }
+
+    [Name("date")]
     public DateOnly Date { get; set; }
 
     public override string ToString()
     {
-        return $"{Category}:{Description}:{Date:yyyy-MM-dd}";
+        var categoryString = !string.IsNullOrEmpty(Category) ? $"({Category})" : string.Empty;
+        return $"{Date:yyyy-MM-dd}: {Description} {categoryString}";
     }
 }

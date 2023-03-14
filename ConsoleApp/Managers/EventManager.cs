@@ -1,39 +1,24 @@
 ﻿using ConsoleApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
+using CsvHelper;
+using CsvHelper.Configuration;
+using System.Globalization;
 
 namespace ConsoleApp.Managers
 {
     /// <summary>
-    /// All Event opertaions are handled through this Manager
+    /// All Event operations are handled through this Manager
     /// </summary>
     public static class EventManager
     {
         /// <summary>
-        /// Temporary List for all events. 
-        /// TODO: Should be collected from a CSV-file
-        /// </summary>
-        static List<Event> Events = new()
-        {
-            new Event("Birthday", "Tuukka", new DateOnly(2000, 05, 23)),
-            new Event("Birthday", "Arnold", new DateOnly(1947, 07, 30)),
-            new Event("Holiday", "Christmast last year", new DateOnly(2022, 12, 24)),
-            new Event(null, "today", DateOnly.FromDateTime(DateTime.Today))
-        };
-
-
-        /// <summary>
-        /// Gets events from collection and filters them
+        /// Gets events from events.csv and filters them
         /// </summary>
         /// <param name="options">Option for the filter</param>
-        /// <returns></returns>
+        /// <returns>Filtered Events</returns>
         public static List<Event> GetEvents(ListOptions options)
         {
-            return QueryEvents(Events, options);
+            var allEvents = ReadEventsFromCSV();
+            return QueryEvents(allEvents, options);
         }
 
         /// <summary>
@@ -43,8 +28,21 @@ namespace ConsoleApp.Managers
         /// <returns></returns>
         public static Event AddEvent(AddOptions options)
         {
+            string eventsFile = GetEventsFilePath();
+
+            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                PrepareHeaderForMatch = args => args.Header.ToLower() // additional configuring needed to make headers case insensitive
+            };
+
             Event newEvent = new Event(options);
-            Events.Add(newEvent);
+
+            var allEvents = ReadEventsFromCSV();
+
+            allEvents.Add(newEvent);
+
+            WriteEventsToCSV(allEvents);
+
             return newEvent;
         }
 
@@ -57,7 +55,10 @@ namespace ConsoleApp.Managers
         /// <returns></returns>
         public static List<Event> DeleteEvents(DeleteOptions options)
         {
-            var toBeDeletedEvents = QueryEvents(Events, options);
+
+            var allEvents = ReadEventsFromCSV();
+
+            var toBeDeletedEvents = (options.DeleteAllEvents) ? allEvents : QueryEvents(allEvents, options);
 
             if (options.DryRun)
             {
@@ -67,8 +68,11 @@ namespace ConsoleApp.Managers
             {
                 foreach (var toBeDeletedEvent in toBeDeletedEvents)
                 {
-                    Events.Remove(toBeDeletedEvent);
+                    allEvents.Remove(toBeDeletedEvent);
                 }
+
+                WriteEventsToCSV(allEvents);
+
                 return toBeDeletedEvents;
             }
         }
@@ -80,7 +84,7 @@ namespace ConsoleApp.Managers
         /// <param name="events">All Events</param>
         /// <param name="options">Options/Filters</param>
         /// <returns></returns>
-        static List<Event> QueryEvents(List<Event> events, IEventFilterOptions options)
+        static List<Event> QueryEvents(IEnumerable<Event> events, IEventFilterOptions options)
         {
             IEnumerable<Event> filteredEvents = events;
 
@@ -130,6 +134,74 @@ namespace ConsoleApp.Managers
 
         }
 
+
+        /// <summary>
+        /// Creates and tests the filepath for Events.csv file
+        /// </summary>
+        /// <returns>Full path for Events.csv</returns>
+        /// <exception cref="DirectoryNotFoundException">Throws this if one of the two directories doesn't exist</exception>
+        /// <exception cref="FileNotFoundException">Throws this if Events.csv doesn't exist</exception>
+        public static string GetEventsFilePath()
+        {
+            string userHomeDirectory = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+            if (!Directory.Exists(userHomeDirectory))
+            {
+                throw new DirectoryNotFoundException("Home directory couldn't be determined: " + userHomeDirectory);
+            }
+
+            string daysDirectory = Path.Combine(userHomeDirectory + "/.days");
+            if (!Directory.Exists(daysDirectory))
+            {
+                throw new DirectoryNotFoundException(".days directory doesnt exist in the home directory: " + daysDirectory + " please create it!");
+            }
+
+            string eventsFile = Path.Combine(daysDirectory + "/events.csv");
+
+            if (!File.Exists(eventsFile))
+            {
+                throw new FileNotFoundException("events.csv doesn't exist in the .days directory: " + eventsFile + " please create it!");
+            }
+
+            return eventsFile;
+        }
+
+        /// <summary>
+        /// Reads all Events from Events.csv file
+        /// </summary>
+        /// <returns>All Events from Events.csv file</returns>
+        private static List<Event> ReadEventsFromCSV()
+        {
+            string eventsFile = GetEventsFilePath();
+
+            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                PrepareHeaderForMatch = args => args.Header.ToLower() // this additional configuring needed to make headers case insensitive
+            };
+
+            using var reader = new StreamReader(eventsFile);
+            using var csvReader = new CsvReader(reader, csvConfig);
+
+            return csvReader.GetRecords<Event>().OrderBy(x => x.Date).ToList();
+        }
+
+        /// <summary>
+        /// Overwrites Events to Events.csv file
+        /// </summary>
+        /// <param name="eventsToWrite">Writes these events to CSV file</param>
+        private static void WriteEventsToCSV(IEnumerable<Event> eventsToWrite)
+        {
+            string eventsFile = GetEventsFilePath();
+
+            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                PrepareHeaderForMatch = args => args.Header.ToLower() // this additional configuring needed to make headers case insensitive
+            };
+
+            using var writer = new StreamWriter(eventsFile);
+            using var csvWriter = new CsvWriter(writer, csvConfig);
+
+            csvWriter.WriteRecords(eventsToWrite.OrderBy(x => x.Date));
+        }
 
     }
 }
