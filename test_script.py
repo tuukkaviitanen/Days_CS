@@ -2,7 +2,11 @@ import os
 
 
 ProjectName = "Days"
-AppName = "days"
+
+if (os.name == "nt"):  # ON WINDOWS: days works just fine
+    AppName = "days"
+else:  # ON LINUX AND OTHER PLATFORMS: includes ./ and ".exe" extension
+    AppName = "./days.exe"
 
 solution_directory = os.path.dirname(os.path.realpath(__file__))
 programDirectory = os.path.join(

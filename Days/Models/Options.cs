@@ -3,22 +3,45 @@
 namespace Days.Models
 {
     /// <summary>
-    /// Included all more than once used constants in Options
+    /// Includes all more-than-once-used constants in Options
     /// </summary>
     static class Constants
     {
         internal const string Category = "category";
+        internal const string CategoryHelp = "Filter all Events in selected category. (Case INSENSITIVE)";
+
         internal const string Categories = "categories";
+        internal const string CategoriesHelp = "Filter all Events in selected categories. Seperated by comma ',' (Case INSENSITIVE) ";
+
         internal const string Description = "description";
+        internal const string DescriptionHelp = "Filter all Events matching description (even partial match) (Case INSENSITIVE)";
+
         internal const string Queries = "Queries";
+        internal const string QueriesHelp = "Queries";
+
         internal const string Date = "date";
+        internal const string DateHelp = "Filter all Events in selected date";
+
         internal const string Today = "today";
+        internal const string TodayHelp = "Filter all Events happening today";
+
         internal const string AfterDate = "after-date";
+        internal const string AfterDateHelp = "Filter all Events after the selected date";
+
         internal const string BeforeDate = "before-date";
+        internal const string BeforeDateHelp = "Filter all Events prior the selected date";
+
         internal const string NoCategory = "no-category";
+        internal const string NoCategoryHelp = "Filter all Events with no category";
+
         internal const string Exclude = "exclude";
+        internal const string ExcludeHelp = "Reverse all used filters";
+
         internal const string All = "all";
+        internal const string AllHelp = "Delete ALL Events";
+
         internal const string DryRun = "dry-run";
+        internal const string DryRunHelp = "Only displays Events that would be deleted with used filters";
     }
 
     /// <summary>
@@ -93,39 +116,39 @@ namespace Days.Models
     [Verb("list",HelpText = "List events to console")]
     public class ListOptions : IEventFilterOptions
     {
-        [Option(Constants.Category)]
+        [Option(Constants.Category, HelpText = Constants.CategoryHelp)]
         public string? Category { get; set; }
 
 
-        [Option(Constants.Categories)]
+        [Option(Constants.Categories, HelpText = Constants.CategoriesHelp)]
         public string? Categories { get; set; }
 
 
-        [Option(Constants.Description)]
+        [Option(Constants.Description, HelpText = Constants.DescriptionHelp)]
         public string? Description { get; set; }
 
 
-        [Option(Constants.Date)]
+        [Option(Constants.Date, HelpText = Constants.DateHelp)]
         public DateOnly? Date { get; set; }
 
 
-        [Option(Constants.Today)]
+        [Option(Constants.Today, HelpText = Constants.TodayHelp)]
         public bool IsToday { get; set; }
 
 
-        [Option(Constants.AfterDate)]
+        [Option(Constants.AfterDate, HelpText = Constants.AfterDateHelp)]
         public DateOnly? AfterDate { get; set; }
 
 
-        [Option(Constants.BeforeDate)]
+        [Option(Constants.BeforeDate, HelpText = Constants.BeforeDateHelp)]
         public DateOnly? BeforeDate { get; set; }
 
 
-        [Option(Constants.NoCategory)]
+        [Option(Constants.NoCategory, HelpText = Constants.NoCategoryHelp)]
         public bool NoCategory { get; set; }
 
 
-        [Option(Constants.Exclude)]
+        [Option(Constants.Exclude, HelpText = Constants.ExcludeHelp)]
         public bool IsExcluded { get; set; }
     }
 
@@ -134,46 +157,46 @@ namespace Days.Models
     /// Also sets all queries as one group. 
     /// This way one of them is always required.
     /// </summary>
-    [Verb("delete", HelpText = "Delete event(s)")]
+    [Verb("delete", HelpText = "Delete event(s). Displays all deleted/would-be-deleted events")]
     public class DeleteOptions : IEventDeleteOptions
     {
-        [Option(Constants.Category, Group = Constants.Queries)]
+        [Option(Constants.Category, HelpText = Constants.CategoryHelp, Group = Constants.Queries)] // Option needs to be set seperately from ListOptions because of GROUP paramter
         public string? Category { get; set; }
 
 
-        [Option(Constants.Description, Group = Constants.Queries)]
+        [Option(Constants.Description, HelpText = Constants.DescriptionHelp, Group = Constants.Queries)]
         public string? Description { get; set; }
 
 
-        [Option(Constants.Date, Group = Constants.Queries)]
+        [Option(Constants.Date, HelpText = Constants.DateHelp, Group = Constants.Queries)]
         public DateOnly? Date { get; set; }
 
 
-        [Option(Constants.Today, Group = Constants.Queries)]
+        [Option(Constants.Today, HelpText = Constants.TodayHelp, Group = Constants.Queries)]
         public bool IsToday { get; set; }
 
 
-        [Option(Constants.AfterDate, Group = Constants.Queries)]
+        [Option(Constants.AfterDate, HelpText = Constants.AfterDateHelp, Group = Constants.Queries)]
         public DateOnly? AfterDate { get; set; }
 
 
-        [Option(Constants.BeforeDate, Group = Constants.Queries)]
+        [Option(Constants.BeforeDate, HelpText = Constants.BeforeDateHelp, Group = Constants.Queries)]
         public DateOnly? BeforeDate { get; set; }
 
 
-        [Option(Constants.NoCategory, Group = Constants.Queries)]
+        [Option(Constants.NoCategory, HelpText = Constants.NoCategoryHelp, Group = Constants.Queries)]
         public bool NoCategory { get; set; }
 
 
-        [Option(Constants.Exclude, Group = Constants.Queries)]
+        [Option(Constants.Exclude, HelpText = Constants.ExcludeHelp, Group = Constants.Queries)]
         public bool IsExcluded { get; set; }
 
 
-        [Option(Constants.All, Group = Constants.Queries)]
+        [Option(Constants.All, HelpText = Constants.AllHelp, Group = Constants.Queries)]
         public bool DeleteAllEvents { get; set; }
 
 
-        [Option(Constants.DryRun)]
+        [Option(Constants.DryRun, HelpText = Constants.DryRunHelp)]
         public bool DryRun { get; set; }
 
 

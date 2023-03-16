@@ -3,7 +3,7 @@ using Days.Managers;
 using Days.Models;
 
 
-Parser.Default.ParseArguments<ListOptions, AddOptions, DeleteOptions>(args)
+Parser.Default.ParseArguments<ListOptions, AddOptions, DeleteOptions>(args) // Parses and runs verbs and options from commandline args
         .WithParsed<ListOptions>(HandleListCommand)
         .WithParsed<AddOptions>(HandleAddCommand)
         .WithParsed<DeleteOptions>(HandleDeleteCommand);
