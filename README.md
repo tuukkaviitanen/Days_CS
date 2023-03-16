@@ -18,7 +18,7 @@ Project uses .NET 7
 
 Same documentation is also found in program (try: --help, list --help).
 README UPDATED ON 2023-03-16. Most up-to-date params documentation can always be found in-app.
-
+```
   list       List events to console
 
     --category       Filter all Events in selected category. (Case INSENSITIVE)
@@ -68,7 +68,7 @@ README UPDATED ON 2023-03-16. Most up-to-date params documentation can always be
     --all            (Group: Queries) Delete ALL Events
 
     --dry-run        Only displays Events that would be deleted with used filters
-
+```
 ## TESTING WITH SCRIPT
 
 After building the app in debug configuration, you should be able to run `test_script.py`.
