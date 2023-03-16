@@ -155,11 +155,11 @@ namespace Days.Managers
                 throw new DirectoryNotFoundException(".days directory doesnt exist in the home directory: " + daysDirectory + " please create it!");
             }
 
-            string eventsFile = Path.Combine(daysDirectory + "/events.csv");
+            string eventsFile = Path.Combine(daysDirectory + "/Events.csv");
 
             if (!File.Exists(eventsFile))
             {
-                throw new FileNotFoundException("events.csv doesn't exist in the .days directory: " + eventsFile + " please create it!");
+                throw new FileNotFoundException("Events.csv doesn't exist in the .days directory: " + eventsFile + " please create it!");
             }
 
             return eventsFile;

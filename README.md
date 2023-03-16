@@ -7,7 +7,7 @@ Project uses .NET 7
 ## HOW TO USE
 
 1. Create a directory called `.days` in your HOME DIRECTORY (ON WINDOWS C:/Users/{username}) (ON LINUX: /home/{username}) (usually)
-2. Create `Events.csv` file inside `.days`
+2. Create `Events.csv` file inside `.days` and add "date", "category" and "description" headers. You can use the template `Events.csv` included in this repository for reference.
 3. BUILD Days project either in Visual Studio 2022 or in console using `dotnet build` (.NET 7 SDK needed)
 4. Program is now runnable...
    a. with `dotnet run [params]`
@@ -72,7 +72,8 @@ README UPDATED ON 2023-03-16. Most up-to-date params documentation can always be
 ## TESTING WITH SCRIPT
 
 After building the app in debug configuration, you should be able to run `test_script.py`.
-It runs most possible iterations of the app through console.
+It runs most of possible params of the app through console.
+`Events.csv` included in this repository was used in testing.
 
 HOW-TO:
 
