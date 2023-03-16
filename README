@@ -47,7 +47,7 @@ README UPDATED ON 2023-03-16. Most up-to-date params documentation can always be
 
     --date
 
-  delete     Delete event(s). Displays all deleted/would-be-deleted events
+  delete     Delete event(s). Displays all deleted/would-be-deleted events. At least one option from group 'Queries' is required.
 
     --category       (Group: Queries) Filter all Events in selected category. (Case INSENSITIVE)
 
