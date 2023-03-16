@@ -1,11 +1,12 @@
 import os
 
 
-AppName = "Days"
+ProjectName = "Days"
+AppName = "days"
 
 solution_directory = os.path.dirname(os.path.realpath(__file__))
 programDirectory = os.path.join(
-    solution_directory, AppName, "bin", "Debug", "net7.0")
+    solution_directory, ProjectName, "bin", "Debug", "net7.0")
 os.chdir(programDirectory)
 
 

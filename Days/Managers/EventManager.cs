@@ -192,13 +192,8 @@ namespace Days.Managers
         {
             string eventsFile = GetEventsFilePath();
 
-            var csvConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
-            {
-                PrepareHeaderForMatch = args => args.Header.ToLower() // this additional configuring needed to make headers case insensitive
-            };
-
             using var writer = new StreamWriter(eventsFile);
-            using var csvWriter = new CsvWriter(writer, csvConfig);
+            using var csvWriter = new CsvWriter(writer, CultureInfo.InvariantCulture);
 
             csvWriter.WriteRecords(eventsToWrite.OrderBy(x => x.Date));
         }
