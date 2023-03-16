@@ -26,14 +26,49 @@ namespace Days.Models
     /// </summary>
     public interface IEventFilterOptions
     {
+        /// <summary>
+        /// Filters Events by single category
+        /// </summary>
         public string? Category { get; set; }
+
+        /// <summary>
+        /// Filters Events by multiple categories. Seperated by comma ","
+        /// </summary>
         public string? Categories { get; set; }
+
+        /// <summary>
+        /// Filters Events by all Events that contain this description/part of description
+        /// </summary>
         public string? Description { get; set; }
+
+        /// <summary>
+        /// Filters Events by date
+        /// </summary>
         public DateOnly? Date { get; set; }
+
+        /// <summary>
+        /// Filters Events happening today
+        /// </summary>
         public bool IsToday { get; set; }
+
+        /// <summary>
+        /// Filters Events happening after this date
+        /// </summary>
         public DateOnly? AfterDate { get; set; }
+
+        /// <summary>
+        /// Filters Events happening before this date
+        /// </summary>
         public DateOnly? BeforeDate { get; set; }
+
+        /// <summary>
+        /// Filters Events with no category
+        /// </summary>
         public bool NoCategory { get; set; }
+
+        /// <summary>
+        /// Filters are reversed
+        /// </summary>
         public bool IsExcluded { get; set; }
     }
     /// <summary>
@@ -41,7 +76,14 @@ namespace Days.Models
     /// </summary>
     public interface IEventDeleteOptions : IEventFilterOptions
     {
+        /// <summary>
+        /// Delete command won't actually delete the shown Events
+        /// </summary>
         bool DryRun { get; set; }
+
+        /// <summary>
+        /// All stored Event will be deleted
+        /// </summary>
         bool DeleteAllEvents { get; set; } 
     }
 

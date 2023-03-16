@@ -13,11 +13,18 @@ Parser.Default.ParseArguments<ListOptions, AddOptions, DeleteOptions>(args)
 /// </summary>
 static void HandleListCommand(ListOptions options)
 {
-    var results = EventManager.GetEvents(options);
-
-    foreach (var item in results)
+    try
     {
-        Console.WriteLine(item);
+        var results = EventManager.GetEvents(options);
+
+        foreach (var item in results)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
     }
 }
 
@@ -26,9 +33,17 @@ static void HandleListCommand(ListOptions options)
 /// </summary>
 static void HandleAddCommand(AddOptions options)
 {
-    Event result = EventManager.AddEvent(options);
+    try
+    {
+        Event result = EventManager.AddEvent(options);
 
-    Console.WriteLine(result);
+        Console.WriteLine(result);
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
+    
 }
 
 /// <summary>
@@ -36,10 +51,18 @@ static void HandleAddCommand(AddOptions options)
 /// </summary>
 static void HandleDeleteCommand(DeleteOptions options)
 {
-    var results = EventManager.DeleteEvents(options);
-
-    foreach (Event item in results)
+    try
     {
-        Console.WriteLine(item);
+        var results = EventManager.DeleteEvents(options);
+
+        foreach (Event item in results)
+        {
+            Console.WriteLine(item);
+        }
     }
+    catch(Exception ex)
+    {
+        Console.WriteLine($"Error: {ex.Message}");
+    }
+    
 }
