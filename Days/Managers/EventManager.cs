@@ -58,7 +58,7 @@ namespace Days.Managers
 
             var allEvents = ReadEventsFromCSV();
 
-            var toBeDeletedEvents = (options.DeleteAllEvents) ? allEvents : QueryEvents(allEvents, options);
+            List<Event> toBeDeletedEvents = (options.DeleteAllEvents) ? allEvents.ToList() : QueryEvents(allEvents, options);
 
             if (options.DryRun)
             {
