@@ -2,7 +2,7 @@
   "profiles": {
     "Days": {
       "commandName": "Project",
-      "commandLineArgs": "delete --all"
+      "commandLineArgs": "list"
     },
     "WSL": {
       "commandName": "WSL2",

@@ -35,7 +35,7 @@ public class Event : IEvent
     }
 
     // Name attributes are for CsvHelper to write lowercase headers
-    [Name("date")]
+    [Name("date"), Format("yyyy-MM-dd")]
     public DateOnly Date { get; set; }
 
     [Name("category")]
