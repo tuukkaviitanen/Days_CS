@@ -21,6 +21,11 @@ static void HandleListCommand(ListOptions options)
         {
             Console.WriteLine(item);
         }
+
+        if(results.Count == 0)
+        {
+            Console.WriteLine("No matching events found");
+        }
     }
     catch (Exception ex)
     {
@@ -58,6 +63,11 @@ static void HandleDeleteCommand(DeleteOptions options)
         foreach (Event item in results)
         {
             Console.WriteLine(item);
+        }
+
+        if (results.Count == 0)
+        {
+            Console.WriteLine("No matching events found");
         }
     }
     catch(Exception ex)
